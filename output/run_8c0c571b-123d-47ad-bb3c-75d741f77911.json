@@ -1,0 +1,215 @@
+{
+  "run_id": "8c0c571b-123d-47ad-bb3c-75d741f77911",
+  "incident": {
+    "incident_id": "INC-2026-08-020",
+    "timestamp": "2026-08-20T18:30:00Z",
+    "description": "Payment API latency has increased significantly over the last 30 minutes and error rates have started rising.",
+    "environment": "prod",
+    "affected_service": "payment-service",
+    "severity": "high",
+    "initial_symptoms": [
+      "p95 latency increased from 200ms to 2000ms",
+      "error rate increased from 0.01% to 2.5%",
+      "5xx errors: GET /api/payment/status returning 503",
+      "database connection pool saturation observed"
+    ]
+  },
+  "llm": {
+    "provider": "Ollama",
+    "model": "mistral",
+    "available": true,
+    "fallback_used": false
+  },
+  "rag": {
+    "embedding_model": "all-MiniLM-L6-v2 or hash-simulator fallback",
+    "vector_database": "FAISS"
+  },
+  "workflow_summary": {
+    "run_id": "8c0c571b-123d-47ad-bb3c-75d741f77911",
+    "incident_id": "INC-2026-08-020",
+    "current_state": "resolved",
+    "investigation_findings": 5,
+    "action_proposed": true,
+    "action_approved": true,
+    "final_result": "Incident remediation completed successfully",
+    "errors": [],
+    "created_at": "2026-08-23T12:49:15.724888",
+    "updated_at": "2026-08-23T12:53:22.467308"
+  },
+  "state": {
+    "run_id": "8c0c571b-123d-47ad-bb3c-75d741f77911",
+    "incident_id": "INC-2026-08-020",
+    "current_state": "resolved",
+    "incident": {
+      "incident_id": "INC-2026-08-020",
+      "timestamp": "2026-08-20T18:30:00Z",
+      "description": "Payment API latency has increased significantly over the last 30 minutes and error rates have started rising.",
+      "environment": "prod",
+      "affected_service": "payment-service",
+      "severity": "high",
+      "initial_symptoms": [
+        "p95 latency increased from 200ms to 2000ms",
+        "error rate increased from 0.01% to 2.5%",
+        "5xx errors: GET /api/payment/status returning 503",
+        "database connection pool saturation observed"
+      ]
+    },
+    "plan": {
+      "plan_id": "d0dbacbc-8ede-48c1-9b2e-87e4f0f81736",
+      "incident_id": "INC-2026-08-020",
+      "description": "Systematically investigate payment service latency incident",
+      "tasks": [
+        {
+          "task_id": "d52ce4c4-bd1d-4535-baef-82f37dc63c4d",
+          "description": "Check payment-db connection pool and resource utilization",
+          "target_service": "payment-db",
+          "check_types": [
+            "logs",
+            "metrics",
+            "dependency_graph"
+          ]
+        },
+        {
+          "task_id": "7c19d177-990d-468f-b67a-674bb2042c36",
+          "description": "Check auth-service and fraud-service latency",
+          "target_service": "auth-service",
+          "check_types": [
+            "logs",
+            "metrics"
+          ]
+        },
+        {
+          "task_id": "f31f4cd7-6db3-474a-9d3c-f78504dd52ed",
+          "description": "Retrieve payment latency troubleshooting runbook",
+          "target_service": "payment-service",
+          "check_types": [
+            "runbooks"
+          ]
+        },
+        {
+          "task_id": "bb4c95eb-adda-4b2d-8177-8741ad1c7aca",
+          "description": "Check payment-service logs and metrics",
+          "target_service": "payment-service",
+          "check_types": [
+            "logs",
+            "metrics"
+          ]
+        }
+      ],
+      "investigation_priority": [
+        "database_health",
+        "dependency_health",
+        "error_analysis"
+      ]
+    },
+    "evidence": [
+      {
+        "id": "45a82cf5-c22b-45fb-bda7-2d57e9b3b6e3",
+        "source": "metrics",
+        "service": "payment-service",
+        "content": "High p95 latency detected: 2100.0ms at 2026-08-20T18:30:00Z",
+        "timestamp": "2026-08-20T18:30:00Z",
+        "confidence": 0.99
+      },
+      {
+        "id": "b3380ce5-29b4-45e1-b83b-7095fa0b9bca",
+        "source": "metrics",
+        "service": "payment-service",
+        "content": "Elevated error rate: 2.5% at 2026-08-20T18:30:00Z",
+        "timestamp": "2026-08-20T18:30:00Z",
+        "confidence": 0.99
+      },
+      {
+        "id": "c4b12803-ffe0-4b1f-a1ac-768653c9b44e",
+        "source": "metrics",
+        "service": "payment-service",
+        "content": "High p95 latency detected: 2800.0ms at 2026-08-20T18:40:00Z",
+        "timestamp": "2026-08-20T18:40:00Z",
+        "confidence": 0.99
+      },
+      {
+        "id": "9964d4a0-55d8-4132-b8f0-5b64f719d472",
+        "source": "metrics",
+        "service": "payment-service",
+        "content": "Elevated error rate: 5.2% at 2026-08-20T18:40:00Z",
+        "timestamp": "2026-08-20T18:40:00Z",
+        "confidence": 0.99
+      },
+      {
+        "id": "0bb77922-0055-4021-a256-6d6c3ff14c48",
+        "source": "dependency_graph",
+        "service": "payment-service",
+        "content": "Dependency graph retrieved: 5 services, 6 dependencies",
+        "timestamp": "2026-08-20T18:40:00Z",
+        "confidence": 1.0
+      }
+    ],
+    "action_proposal": {
+      "incident_id": "INC-2026-08-020",
+      "action": "scale",
+      "service": "payment-service",
+      "parameters": {
+        "target_replicas": 6,
+        "current_replicas": 3
+      },
+      "reason": "Scale payment-service from 3 to 6 replicas to reduce load on database and distribute query processing",
+      "evidence_ids": [
+        "45a82cf5-c22b-45fb-bda7-2d57e9b3b6e3",
+        "b3380ce5-29b4-45e1-b83b-7095fa0b9bca",
+        "c4b12803-ffe0-4b1f-a1ac-768653c9b44e"
+      ],
+      "expected_outcome": "P95 latency should drop below 500ms within 2 minutes, error rate should normalize"
+    },
+    "verification_decision": {
+      "incident_id": "INC-2026-08-020",
+      "approved": true,
+      "risk_level": "medium",
+      "blast_radius": [
+        "payment-service"
+      ],
+      "policy_checks": [
+        {
+          "check_name": "environment_scope",
+          "passed": true,
+          "reason": "Environment prod is allowed"
+        },
+        {
+          "check_name": "action_allowed_for_service",
+          "passed": true,
+          "reason": "Scaling action is permitted for stateless services"
+        },
+        {
+          "check_name": "safe_time_window",
+          "passed": true,
+          "reason": "Current time window is acceptable for medium-risk actions"
+        },
+        {
+          "check_name": "blast_radius",
+          "passed": true,
+          "reason": "Blast radius includes 1 services (limit: 5)"
+        },
+        {
+          "check_name": "sufficient_evidence",
+          "passed": true,
+          "reason": "Action supported by 3 evidence items"
+        }
+      ],
+      "reason": "All safety checks passed",
+      "safer_alternative": null
+    },
+    "tool_results": [
+      {
+        "tool_name": "simulate_scale",
+        "success": true,
+        "service": "payment-service",
+        "status": "success",
+        "message": "Scaled payment-service to 6 replicas",
+        "instances_affected": 6
+      }
+    ],
+    "final_result": "Incident remediation completed successfully",
+    "created_at": "2026-08-23T12:49:15.724888",
+    "updated_at": "2026-08-23T12:53:22.467308",
+    "errors": []
+  }
+}
