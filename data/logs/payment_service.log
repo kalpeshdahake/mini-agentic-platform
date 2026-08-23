@@ -1,0 +1,13 @@
+2026-08-20T18:00:00Z INFO payment-service Request processing: GET /api/payments/123 completed in 145ms
+2026-08-20T18:05:00Z INFO payment-service Request processing: GET /api/payments/456 completed in 152ms
+2026-08-20T18:10:00Z INFO payment-db Database connection pool: 5/20 connections active
+2026-08-20T18:15:00Z INFO auth-service Token validation completed in 12ms
+2026-08-20T18:20:00Z WARN payment-service Request timeout for payment-db query after 5000ms
+2026-08-20T18:25:00Z ERROR payment-db Connection pool exhausted: 20/20 connections active
+2026-08-20T18:28:00Z ERROR payment-service Downstream dependency payment-db unavailable, returning 503
+2026-08-20T18:30:00Z ERROR payment-service Request processing: GET /api/payments/789 failed after 2150ms - connection denied
+2026-08-20T18:32:00Z ERROR payment-service High error rate detected: 45 errors in last 60s
+2026-08-20T18:33:00Z WARN payment-service Circuit breaker opened for payment-db after 50 consecutive failures
+2026-08-20T18:35:00Z ERROR payment-db Replication lag detected: 12000ms behind primary
+2026-08-20T18:36:00Z ERROR fraud-service Unable to reach payment-db: connection refused
+2026-08-20T18:40:00Z WARN payment-db Memory pressure: 8.5GB / 10GB used (85%)

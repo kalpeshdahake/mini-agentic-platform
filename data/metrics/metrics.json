@@ -1,0 +1,78 @@
+{
+  "metrics": [
+    {
+      "timestamp": "2026-08-20T18:00:00Z",
+      "service": "payment-service",
+      "p50_latency_ms": 120,
+      "p95_latency_ms": 200,
+      "p99_latency_ms": 350,
+      "error_rate_percent": 0.01,
+      "throughput_rps": 1500
+    },
+    {
+      "timestamp": "2026-08-20T18:15:00Z",
+      "service": "payment-service",
+      "p50_latency_ms": 125,
+      "p95_latency_ms": 220,
+      "p99_latency_ms": 380,
+      "error_rate_percent": 0.02,
+      "throughput_rps": 1520
+    },
+    {
+      "timestamp": "2026-08-20T18:30:00Z",
+      "service": "payment-service",
+      "p50_latency_ms": 850,
+      "p95_latency_ms": 2100,
+      "p99_latency_ms": 3500,
+      "error_rate_percent": 2.5,
+      "throughput_rps": 450
+    },
+    {
+      "timestamp": "2026-08-20T18:40:00Z",
+      "service": "payment-service",
+      "p50_latency_ms": 1200,
+      "p95_latency_ms": 2800,
+      "p99_latency_ms": 4200,
+      "error_rate_percent": 5.2,
+      "throughput_rps": 250
+    },
+    {
+      "timestamp": "2026-08-20T18:00:00Z",
+      "service": "payment-db",
+      "active_connections": 5,
+      "max_connections": 20,
+      "cpu_percent": 15,
+      "memory_percent": 45,
+      "disk_percent": 60,
+      "queries_per_second": 500
+    },
+    {
+      "timestamp": "2026-08-20T18:30:00Z",
+      "service": "payment-db",
+      "active_connections": 20,
+      "max_connections": 20,
+      "cpu_percent": 94,
+      "memory_percent": 85,
+      "disk_percent": 60,
+      "queries_per_second": 2800
+    },
+    {
+      "timestamp": "2026-08-20T18:00:00Z",
+      "service": "auth-service",
+      "p50_latency_ms": 8,
+      "p95_latency_ms": 12,
+      "p99_latency_ms": 25,
+      "error_rate_percent": 0.0,
+      "throughput_rps": 3000
+    },
+    {
+      "timestamp": "2026-08-20T18:30:00Z",
+      "service": "auth-service",
+      "p50_latency_ms": 45,
+      "p95_latency_ms": 150,
+      "p99_latency_ms": 800,
+      "error_rate_percent": 1.2,
+      "throughput_rps": 2100
+    }
+  ]
+}

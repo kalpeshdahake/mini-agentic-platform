@@ -1,0 +1,14 @@
+{
+  "incident_id": "INC-2026-08-020",
+  "timestamp": "2026-08-20T18:30:00Z",
+  "description": "Payment API latency has increased significantly over the last 30 minutes and error rates have started rising.",
+  "environment": "prod",
+  "affected_service": "payment-service",
+  "severity": "high",
+  "initial_symptoms": [
+    "p95 latency increased from 200ms to 2000ms",
+    "error rate increased from 0.01% to 2.5%",
+    "5xx errors: GET /api/payment/status returning 503",
+    "database connection pool saturation observed"
+  ]
+}

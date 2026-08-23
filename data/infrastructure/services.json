@@ -1,0 +1,80 @@
+{
+  "environment": "prod",
+  "services": [
+    {
+      "name": "payment-service",
+      "version": "2.4.1",
+      "replicas": 3,
+      "owner": "payments-team",
+      "dependencies": ["payment-db", "auth-service", "fraud-service"],
+      "critical": true
+    },
+    {
+      "name": "payment-db",
+      "version": "13.5",
+      "replicas": 1,
+      "owner": "data-team",
+      "dependencies": [],
+      "critical": true,
+      "type": "postgresql"
+    },
+    {
+      "name": "auth-service",
+      "version": "1.8.2",
+      "replicas": 2,
+      "owner": "auth-team",
+      "dependencies": ["payment-db"],
+      "critical": true
+    },
+    {
+      "name": "fraud-service",
+      "version": "3.1.0",
+      "replicas": 2,
+      "owner": "fraud-detection-team",
+      "dependencies": ["payment-db"],
+      "critical": false
+    },
+    {
+      "name": "notification-service",
+      "version": "1.2.1",
+      "replicas": 1,
+      "owner": "notifications-team",
+      "dependencies": ["payment-service"],
+      "critical": false
+    }
+  ],
+  "dependency_graph": {
+    "edges": [
+      {
+        "source": "payment-service",
+        "target": "payment-db",
+        "type": "calls"
+      },
+      {
+        "source": "payment-service",
+        "target": "auth-service",
+        "type": "calls"
+      },
+      {
+        "source": "payment-service",
+        "target": "fraud-service",
+        "type": "calls"
+      },
+      {
+        "source": "auth-service",
+        "target": "payment-db",
+        "type": "calls"
+      },
+      {
+        "source": "fraud-service",
+        "target": "payment-db",
+        "type": "calls"
+      },
+      {
+        "source": "notification-service",
+        "target": "payment-service",
+        "type": "depends_on"
+      }
+    ]
+  }
+}
